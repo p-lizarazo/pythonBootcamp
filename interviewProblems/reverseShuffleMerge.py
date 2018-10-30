@@ -1,6 +1,6 @@
 
 s=input()
-dict = {}
+d1 = {}
 l=[]
 str=""
 
@@ -30,11 +30,11 @@ def func1(nList,resp,indice):
 
 for c in s:
     try:
-        dict[c]+=1
+        d1[c]+=1
     except:
-        dict[c]=1
+        d1[c]=1
 
-for k,v in dict.items():
+for k,v in d1.items():
     l.append([k,int(v/2)])
 l= sorted(l,reverse=False)
 str = s[::-1]
