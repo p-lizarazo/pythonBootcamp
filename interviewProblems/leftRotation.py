@@ -1,5 +1,4 @@
 #Left rotation
-
 n,d = map(int,input().split() )
 l = input().split()
 residual = d%n

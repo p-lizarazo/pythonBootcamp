@@ -1,4 +1,4 @@
-#determine wether a a string is funny or # NOTE:
+#determine wether a a string is funny or not
 n = int(input(""))
 while(n):
     s = input("")
