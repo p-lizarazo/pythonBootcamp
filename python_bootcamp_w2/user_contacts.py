@@ -1,4 +1,5 @@
 from datetime import datetime
+import pickle
 
 
 class Contact:
@@ -84,8 +85,8 @@ def show_menu():
     print("2. Create new contact")
     print("3. Update existing contact")
     print("4. Hide contact")
-    print("5. Save all contacts")
-    print("6. Load Contacts")
+    print("5. Save User")
+    print("6. Load User")
     print("7. Quit")
     print("==============")
     pass
@@ -105,26 +106,18 @@ def show_menu_3():
     pass
 
 
-def show_menu_5():
-    pass
-
-
-def show_menu_6():
-    pass
-
-
-def handle_menu_1(user,option):
+def handle_menu_1(user, op):
     print("==============")
-    if option == 1:
+    if op == 1:
         for i in user.contact_list:
             if not i.hidden:
                 print(i)
         pass
-    if option == 2:
+    if op == 2:
         for i in user.sort_by_date_and_visible():
             print(i)
         pass
-    if option == 3:
+    if op == 3:
         for i in user.contact_list:
             if i.hidden:
                 print(i)
@@ -151,10 +144,11 @@ def handle_menu_2(user):
     user.create_contact(_name,_last_name,_age,_email,_dict)
     pass
 
+#Handle_menu_3
 
 def handle_menu_4(user):
     print("==============")
-    _l = [x for x in u.contact_list if not x.hidden]
+    _l = [x for x in user.contact_list if not x.hidden]
     for i, e in enumerate(_l):
         print("{}. {}".format(i,e))
     _option = int(input("Input number of contact you want to hide: "))
@@ -163,10 +157,39 @@ def handle_menu_4(user):
     pass
 
 
+def handle_menu_5(user):
+    print("===============")
+    s = input("Input File name to save: ")
+    s += ".pickle"
+    print(s)
+    f1 = open(s, "wb")
+    f1.write(pickle.dumps(user))
+    f1.close()
+    print("===============")
+    pass
+
+
+def handle_menu_6():
+    print("===============")
+    s = input("Input File name to load (without extension): ")
+    s+=".pickle"
+    print(s)
+    f2 = open(s, "rb")
+    from_file = f2.read()
+    f2.close()
+    user = pickle.loads(from_file)
+    print("===============")
+    return user
+
+
 u = User()
+
+"""
 u.create_contact("Juan","Perez",10,"JP@hotmail.com", { 123:"home", 321:"office"})
 u.create_contact("Jonhatan","Florez",20,"JF@hotmail.com", {3123:"home"})
 u.create_contact("Pedro","Ramirez",30,"PR@gmail.com",{})
+
+"""
 
 option = 0
 while option != 7:
@@ -181,12 +204,14 @@ while option != 7:
         handle_menu_2(u)
         pass
     if option == 3:
-
+        #missing modified
         pass
     if option == 4:
         handle_menu_4(u)
         pass
     if option == 5:
+        handle_menu_5(u)
         pass
     if option == 6:
+        u = handle_menu_6()
         pass
