@@ -18,12 +18,22 @@ class Contact:
         self.phones = phones
         pass
 
+    @property
+    def full_name(self):
+        return "{} {}".format(self.name, self.last_name)
+
     def __lt__(self, other):
         return self.creation_date < other.creation_date
 
     def __str__(self):
-        return "Name: {}, Last name: {}, Age: {}, Email: {}, Phones: {} ".format(self.name, self.last_name, self.age,
-                                                                                 self.email, self.phones)
+        return "Full name: {}, Age: {}, Email: {}, Phones: {} ".format(self.full_name, self.age,
+                                                                       self.email, self.phones)
+
+    @staticmethod
+    def generator(contacts):
+        gen = (x for x in contacts if not x.hidden)
+        l1 = list(gen)
+        return l1
 
     def update_contact(self, **fields):
         if "name" in fields:
@@ -68,7 +78,7 @@ class User:
         pass
 
     def sort_by_date_and_visible(self):
-        sorted_list = sorted([e for e in self.contact_list if not e.hidden])
+        sorted_list = sorted(Contact.generator(self.contact_list))
         return sorted_list
 
     def __get_contact(self, index):
